@@ -1,11 +1,13 @@
 name: "Exploit AWS OIDC Access"
 
 on:
-  workflow_dispatch:  # Allows manual execution
+  pull_request:
+    branches:
+      - main
 
 permissions:
-  id-token: write
-  contents: read
+  id-token: write  # Required for OIDC authentication
+  contents: read   # Needed for private repo access
 
 jobs:
   escalate:
