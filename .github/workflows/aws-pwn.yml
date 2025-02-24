@@ -1,10 +1,12 @@
-name: "Exploit AWS OIDC Access"
+name: "Test AWS OIDC Access"
 
 on:
-  workflow_dispatch:  # Allows manual execution
+  push:
+    branches:
+      - main
 
 permissions:
-  id-token: write
+  id-token: write   # Required for OIDC authentication
   contents: read
 
 jobs:
@@ -15,13 +17,13 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
-          aws-region: us-east-1
-          role-to-assume: arn:aws:iam::713881802184:role/sts-lab-2-target
+          aws-region: us-east-1  # Change if your AWS region is different
+          role-to-assume: ${{ secrets.READ_ROLE }}
           role-session-name: OIDCSession
 
-      - name: Verify Role Assumption
+      - name: Verify AWS Access
         run: aws sts get-caller-identity
 
       - name: Retrieve Secret (Flag)
