@@ -27,4 +27,4 @@ jobs:
         run: aws sts get-caller-identity
 
       - name: Retrieve Secret (Flag)
-        run: aws secretsmanager get-secret-value --secret-id lab-flag
+        run: aws secretsmanager get-secret-value --secret-id flag_sts_lab_2
